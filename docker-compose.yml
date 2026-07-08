@@ -1,0 +1,29 @@
+version: '3.8'
+
+networks:
+  rede-movel:
+    driver: bridge
+
+services:
+  server:
+    image: caddy:2-alpine
+    container_name: web_server
+    volumes:
+      - ./server/Caddyfile:/etc/caddy/Caddyfile
+    ports:
+      - "443:443/tcp"
+      - "443:443/udp"
+    networks:
+      - rede-movel
+
+  client:
+    build: ./client
+    container_name: python_client
+    depends_on:
+      - server
+    volumes:
+      - ./client:/app
+    networks:
+      - rede-movel
+    cap_add:
+      - NET_ADMIN

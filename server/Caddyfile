@@ -1,0 +1,13 @@
+localhost:443 {
+    # Removida a linha 'protocols h1 h2 h3' pois o Caddy já ativa tudo nativamente
+    
+    route /texto {
+        respond "Simulação de navegação web: Conteúdo de texto carregado com sucesso." 200
+    }
+
+    route /streaming {
+        respond "0123456789" 500000 
+    }
+    
+    tls internal
+}
